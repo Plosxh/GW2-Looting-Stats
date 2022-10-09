@@ -1,0 +1,4 @@
+guildwars2-api-client==0.5.9
+prettytable==3.4.1
+python-dotenv==0.21.0
+termcolor==1.1.0
