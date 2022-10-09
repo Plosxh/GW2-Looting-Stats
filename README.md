@@ -5,6 +5,7 @@ So I was playing some [Guild Wars 2](https://www.guildwars2.com/) these days, ju
 Thats why I created this little helper script. Thats why I created this little helper script. It's able to read a pre-configured looting-target config (like the sample `skyscale_mount.json`) and can then provide an overview of the current materials/inventory stats for that specific looting-target by utilizing the [GW2 API](https://wiki.guildwars2.com/wiki/API:Main) to do that.
 
 ## 🖥️ Sample Output
+![Sample Output](sample_output.jpeg "Sample Output")
 
 ## 🛠️ Getting started
 
