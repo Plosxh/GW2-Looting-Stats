@@ -21,7 +21,7 @@ Create a `.env` file from the given sample `.env.dist` and add the created API K
   REFRESH=300
   LANG=en
 ```
-Here you can also change any other configuration as you like. More to that at ...
+Here you can also change any other configuration as you like. More to that at [Configuration](#%EF%B8%8F-configuration) below.
 
 ### Setup venv:
 ```
