@@ -10,5 +10,3 @@ def get_available_config():
         for name in files:
             configurations.append(name)
     return configurations
-
-
