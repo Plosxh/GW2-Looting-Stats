@@ -7,12 +7,13 @@ from dotenv import load_dotenv
 from gw2api import GuildWars2Client
 from prettytable import PrettyTable
 
+import utils.lib
+
 load_dotenv()
 os.system('color')
 LANG = os.getenv('LANG')
 REFRESH = int(os.getenv('REFRESH'))
 GROUPED = os.getenv('GROUPED')
-CONFIG_FILE = os.getenv('CONFIG_FILE')
 GW2_API_KEY = os.getenv('GW2_API_KEY')
 client = GuildWars2Client(api_key=GW2_API_KEY, lang=LANG)
 
@@ -72,7 +73,7 @@ def get_all_characters_inventory():
     all_items = {}
     characters = client.characters.get()
     for character in characters:
-        log("[4/8]: Retrieving character inventory of " + character + "...")
+        log(f"[4/8]: Retrieving character inventory of {character}...")
         url = client.BASE_URL + '/v2/characters/' + urllib.parse.quote(character) + '/inventory'
         inventory = client.characters.get(url=url)
         for bag in inventory['bags']:
@@ -133,12 +134,16 @@ def verify_token():
             'Insufficient permissions: Set your API key permissions to at least: ' + str(permissions_needed))
 
 
-def load_config():
+def load_config(configurations):
     try:
-        with open(CONFIG_FILE) as file:
+        for conf_id, conf_name in enumerate(configurations):
+            print(f"Choose ID: {conf_id} for {conf_name}.")
+        choosed_configuration = int(input("Enter the ID corresponding the the configuration to load: "))
+        with open(f'./configurations/{configurations[choosed_configuration]}') as file:
             return json.load(file)
-    except Exception:
-        raise ValueError('Invalid config: ' + CONFIG_FILE)
+    except Exception as e:
+        print(e)
+        raise ValueError(f'Invalid config: {configurations[choosed_configuration]}')
 
 
 def pretty_print_stats(all_stats, title="Name"):
@@ -160,7 +165,7 @@ def pause(t):
     while t:
         mins, secs = divmod(t, 60)
         timer = '{:02d}:{:02d}'.format(mins, secs)
-        log('(Refreshing in ' + timer + ')')
+        log(f'(Refreshing in {timer})')
         time.sleep(1)
         t -= 1
     log('Refreshing...')
@@ -168,8 +173,9 @@ def pause(t):
 
 if __name__ == '__main__':
     print()
+    configs = utils.lib.get_available_config()
     verify_token()
-    config = load_config()
+    config = load_config(configs)
 
     while True:
         currency_items = get_currency_items(config['currencies'])
